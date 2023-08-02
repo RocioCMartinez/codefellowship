@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+</head>
+<body>
+<main>
+  <h3 th:if="${username != null}" th:text="${'Current User: ' + username }"></h3>
+
+  <h1 th:text="${'User information for user id: ' + appUserId}"></h1>
+
+    <form th:action="${'/user/' + appUserId}" th:method="PUT">
+        <label for="username">USERNAME</label>
+        <input th:value="${username}" type="text"name="username" id="username" th:disable="${!username.equals(username)}">
+        <input type="submit" value="Edit User Info" th:hidden="${!username.equals(username)}">
+
+    </form>
+
+
+  <div th:text="'Username: ' + ${username}"></div>
+    <div th:text="'Date of Birth: ' + ${dateOfBirth}"></div>
+    <div th:text="'Bio: ' + ${bio}"></div>
+  <div th:text="${'Current Date: ' +#temporals.format(currentDate, 'yyy-MM-dd HH:mm:ss')}"></div>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Page</title>
+</head>
+<body>
+
+<h1>Test Page</h1>
+
+<h3 th:if="${username != null}" th:text="${'Hello, ' + username + ', welcome!'}"></h3>
+
+<div th:replace="/fragments/nav-header :: h3"></div>
+<div th:replace="/fragments/nav-header :: app-header"></div>
+
+
+
+<!--<a href="/login.html">Attempt Log In Again</a>-->
+
+</body>
+</html>
