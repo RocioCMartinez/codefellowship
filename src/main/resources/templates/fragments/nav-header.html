@@ -5,8 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-<h3 th:if="${username}" th:text="'Current User from fragment 1: ' + ${username}"></h3>
+<h3 th:if="${username}" th:text="'User Profile: ' + ${username}"></h3>
 
-<nav th:if="${username}" th:fragment="app-header" th:text="'Current User from fragment 2: ' + ${username}"></nav>
+<nav th:if="${username}" th:fragment="app-header" th:text="'Codefellowship values you!'"></nav>
 </body>
 </html>

@@ -3,25 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <title>User Profile</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
 </head>
 <body>
 <main>
-  <h3 th:if="${username != null}" th:text="${'Current User: ' + username }"></h3>
+<!--  <h3 th:if="${username != null}" th:text="${'Current User: ' + username }"></h3>-->
+    <h1 th:replace="fragments/nav-header"></h1>
 
   <h1 th:text="${'User information for user id: ' + appUserId}"></h1>
 
     <form th:action="${'/user/' + appUserId}" th:method="PUT">
         <label for="username">USERNAME</label>
-        <input th:value="${username}" type="text"name="username" id="username" th:disable="${!username.equals(username)}">
+        <input th:value="${username}" type="text"name="username" id="username" th:hidden="${!username.equals(username)}">
         <input type="submit" value="Edit User Info" th:hidden="${!username.equals(username)}">
 
     </form>
 
-
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/YT_Profile_icon.png" class="card-img-top" alt="Default Profile Image">
   <div th:text="'Username: ' + ${username}"></div>
+    <div th:text="'First Name: ' + ${firstName}"></div>
+    <div th:text="'Last Name: ' + ${lastName}"></div>
     <div th:text="'Date of Birth: ' + ${dateOfBirth}"></div>
     <div th:text="'Bio: ' + ${bio}"></div>
   <div th:text="${'Current Date: ' +#temporals.format(currentDate, 'yyy-MM-dd HH:mm:ss')}"></div>
+
+
+    <h3>Posts</h3>
+    <table>
+        <thead>
+        <tr>
+            <th scope="col">Username</th>
+            <th scope="col">Post</th>
+            <th scope="col">Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="post : ${posts}">
+            <td th:text="${post.appUser.username}">Username</td>
+            <td th:text="${post.body}">Post</td>
+            <td th:text="${post.createdAt}">Date</td>
+        </tr>
+        </tbody>
+    </table>
 </main>
 
 </body>

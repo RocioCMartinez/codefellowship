@@ -12,6 +12,7 @@
     <h1>Codefellowship 🧑‍💻️</h1>
     <h1 th:if="${username != null}" th:text="${'Hello, ' + username + ', welcome!'}">Welcome to Codefellowship!</h1>
 
+    <a th:if="${username}" href="/myprofile">Go To My Profile Page</a>
     <a th:if="!${username}" href="/login">Log In</a>
     <br>
     <a th:if="!${username}" href="/signup">Or Sign Up</a>

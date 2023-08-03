@@ -1,14 +1,12 @@
 package com.codefellowship.codefellowship.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class AppUser implements UserDetails {
@@ -28,6 +26,21 @@ public class AppUser implements UserDetails {
     LocalDate dateOfBirth;
 
     String bio;
+
+    @OneToMany(mappedBy = "appUser")
+    List<Posts> posts;
+
+
+    public AppUser() {
+    }
+
+    public AppUser(String username, String firstName,  String lastName, LocalDate dateOfBirth, String bio) {
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.bio = bio;
+    }
 
     public void setUsername(String username) {
         this.username = username;
@@ -75,6 +88,14 @@ public class AppUser implements UserDetails {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<Posts> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Posts> posts) {
+        this.posts = posts;
     }
 
     @Override
