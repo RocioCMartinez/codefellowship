@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>My Profile</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+</head>
+<body>
+<main>
+  <h1 th:replace="fragments/nav-header"></h1>
+
+  <article>
+    <header th:text="${'Username: ' + homeUser.username}">USERNAME</header>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/YT_Profile_icon.png" class="card-img-top" alt="Default Profile Image">
+    <p th:text="${homeUser.bio}">Bio</p>
+    <footer></footer>
+  </article>
+
+  </div>
+  <ul>
+    <li th:text="'First Name: ' + ${homeUser.firstName}">FIRSTNAME</li>
+    <li th:text="'Last Name: ' + ${homeUser.lastName}">LASTNAME</li>
+    <li th:text="'Date of Birth: ' + ${homeUser.dateOfBirth}">DOB</li>
+  </ul>
+  </div>
+
+  <form action="/create-post" method="POST" th:hidden="${!username.equals(username)}">
+
+    <!-- Grid -->
+    <div class="grid">
+
+      <label for="body">
+        Post
+        <input type="text" id="body" name="body" placeholder="Share your thoughts!" required>
+      </label>
+
+    </div>
+
+    <!-- Button -->
+    <button type="submit">Create Post</button>
+
+  </form>
+
+  <h3>Posts</h3>
+  <table>
+    <thead>
+    <tr>
+      <th scope="col">Username</th>
+      <th scope="col">Post</th>
+      <th scope="col">Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="post : ${posts}">
+      <td th:text="${post.appUser.username}">Username</td>
+      <td th:text="${post.body}">Post</td>
+      <td th:text="${post.createdAt}">Date</td>
+    </tr>
+    </tbody>
+  </table>
+
+
+
+</main>
+
+</body>
+</html>

@@ -1,7 +1,6 @@
 package com.codefellowship.codefellowship.configs;
 
-import com.codefellowship.codefellowship.models.AppUser;
-import com.codefellowship.codefellowship.models.AppUserRepository;
+import com.codefellowship.codefellowship.repos.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
