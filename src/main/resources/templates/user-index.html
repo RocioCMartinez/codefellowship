@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="">
+<head>
+    <meta charset="UTF-8">
+    <title>All Users</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+</head>
+<body>
+<main>
+
+    <h1>All User Profiles</h1>
+
+
+    <article th:each="user : ${userCollection}">
+        <header th:text="${user.username}">USERNAME</header>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/YT_Profile_icon.png" class="card-img-top" alt="Default Profile Image">
+        <p th:text="${user.bio}">Bio</p>
+        <footer> <a th:if="${user}" th:href="'/user/' + ${user.id}">Visit their page!</a> </footer>
+    </article>
+
+</main>
+
+</body>
+</html>

@@ -111,7 +111,7 @@ public class AppUserController {
         }
 
         AppUser idAppUser = appUserRepository.findById(id).orElseThrow();
-        m.addAttribute("username", idAppUser.getUsername());
+        m.addAttribute("userName", idAppUser.getUsername());
         m.addAttribute("firstName", idAppUser.getFirstName());
         m.addAttribute("lastName", idAppUser.getLastName());
         m.addAttribute("appUserId", idAppUser.getId());
@@ -119,6 +119,9 @@ public class AppUserController {
         m.addAttribute("bio", idAppUser.getBio());
 
         m.addAttribute("currentDate", LocalDateTime.now());
+
+        m.addAttribute("usersIFollow", idAppUser.getUsersIFollow());
+        m.addAttribute("userFollowingMe", idAppUser.getUsersWhoFollowMe());
 
         List<Posts> posts = idAppUser.getPosts();
         m.addAttribute("posts", posts);
@@ -165,5 +168,44 @@ public class AppUserController {
             return new RedirectView("/user/" + userId);
         }
         return new RedirectView("/");
+    }
+
+    @PutMapping("/follow-user/{id}")
+    public RedirectView followUser(Principal p, @PathVariable Long id){
+        //Followed user
+        AppUser userToFollow = appUserRepository.findById(id).orElseThrow(() -> new RuntimeException("Could not find user id " + id));
+        //Current logged in user
+        AppUser browsingUser = appUserRepository.findByUsername(p.getName());
+
+        //check
+        if(browsingUser.getUsername().equals((userToFollow.getUsername()))){
+            throw new IllegalArgumentException("Following yourself is not permitted");
+        }
+
+        //access followers from browsingUser and update with new userToFollow
+        browsingUser.getUsersIFollow().add(userToFollow);
+
+        //save info on the database
+
+        appUserRepository.save(browsingUser);
+
+        return new RedirectView("/user/" + id);
+    }
+
+    @GetMapping("/allusers")
+    public String getAllUsers(Model m, Principal p){
+        if(p != null){
+            String username = p.getName();
+            AppUser appUser = appUserRepository.findByUsername(username);
+
+
+            m.addAttribute("username", username);
+        }
+
+        List<AppUser> userCollection = appUserRepository.findAll();
+       m.addAttribute("userCollection", userCollection);
+        
+
+        return "/user-index.html";
     }
 }
