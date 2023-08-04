@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>User Profile</title>
@@ -13,20 +13,33 @@
   <h1 th:text="${'User information for user id: ' + appUserId}"></h1>
 
     <form th:action="${'/user/' + appUserId}" th:method="PUT">
-        <label for="username">USERNAME</label>
-        <input th:value="${username}" type="text"name="username" id="username" th:hidden="${!username.equals(username)}">
-        <input type="submit" value="Edit User Info" th:hidden="${!username.equals(username)}">
+        <label for="username">User Profile</label>
+        <input th:value="${userName}" type="text"name="username" id="username"  th:hidden="${!username.equals(userName)}">
+        <input type="submit" value="Edit Username" th:hidden="${!username.equals(userName)}">
 
     </form>
 
     <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/YT_Profile_icon.png" class="card-img-top" alt="Default Profile Image">
-  <div th:text="'Username: ' + ${username}"></div>
+  <div th:text="'Username: ' + ${userName}"></div>
     <div th:text="'First Name: ' + ${firstName}"></div>
     <div th:text="'Last Name: ' + ${lastName}"></div>
     <div th:text="'Date of Birth: ' + ${dateOfBirth}"></div>
     <div th:text="'Bio: ' + ${bio}"></div>
   <div th:text="${'Current Date: ' +#temporals.format(currentDate, 'yyy-MM-dd HH:mm:ss')}"></div>
 
+    <form th:action="${'/follow-user/' + appUserId}" th:method="PUT">
+        <input type="submit" value="Follow" th:hidden="${username.equals(userName)}">
+    </form>
+
+    <h3>Following</h3>
+    <ul th:each="userFollowed : ${usersIFollow}">
+    <li th:text="${userFollowed.username}"></li>
+    </ul>
+
+    <h3>Followed By</h3>
+    <ul th:each="userFollowingMe : ${userFollowingMe}">
+    <li th:text="${userFollowingMe.username}"></li>
+    </ul>
 
     <h3>Posts</h3>
     <table>

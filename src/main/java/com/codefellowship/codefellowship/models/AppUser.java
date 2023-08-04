@@ -6,7 +6,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class AppUser implements UserDetails {
@@ -30,6 +32,18 @@ public class AppUser implements UserDetails {
     @OneToMany(mappedBy = "appUser")
     List<Posts> posts;
 
+    @ManyToMany
+    @JoinTable(
+            name = "followers_following",
+            joinColumns = {@JoinColumn(name = "followingUser")},
+            inverseJoinColumns = {@JoinColumn(name = "followee")}
+    )
+    Set<AppUser> usersIFollow = new HashSet<>();
+
+
+    @ManyToMany(mappedBy = "usersIFollow")
+    Set<AppUser> usersWhoFollowMe = new HashSet<>();
+
 
     public AppUser() {
     }
@@ -40,6 +54,22 @@ public class AppUser implements UserDetails {
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.bio = bio;
+    }
+
+    public Set<AppUser> getUsersIFollow() {
+        return usersIFollow;
+    }
+
+    public void setUsersIFollow(Set<AppUser> usersIFollow) {
+        this.usersIFollow = usersIFollow;
+    }
+
+    public Set<AppUser> getUsersWhoFollowMe() {
+        return usersWhoFollowMe;
+    }
+
+    public void setUsersWhoFollowMe(Set<AppUser> usersWhoFollowMe) {
+        this.usersWhoFollowMe = usersWhoFollowMe;
     }
 
     public void setUsername(String username) {
